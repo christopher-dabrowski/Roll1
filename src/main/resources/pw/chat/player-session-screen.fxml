@@ -6,8 +6,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pw.chat.GmSessionScreen">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pw.chat.controllers.PlayerSessionScreenController">
    <children>
       <TitledPane animated="false" collapsible="false" disable="true" layoutX="398.0" layoutY="42.0" prefHeight="358.0" prefWidth="202.0" text="DM Chat" />
       <TitledPane animated="false" collapsible="false" layoutY="42.0" prefHeight="358.0" prefWidth="397.0" text="Global chat">
@@ -16,11 +17,15 @@
                <children>
                   <TextArea fx:id="globalChatHistory" editable="false" layoutX="-1.0" prefHeight="288.0" prefWidth="397.0" promptText="Here all messages will apear" wrapText="true" />
                   <TextField fx:id="globalChatInput" layoutY="305.0" prefHeight="26.0" prefWidth="329.0" />
-                  <Button fx:id="globalChatSubmit" layoutX="329.0" layoutY="305.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Send" />
+                  <Button fx:id="globalChatSubmit" disable="true" layoutX="329.0" layoutY="305.0" mnemonicParsing="false" onAction="#handleGlobalMessageSubmit" prefHeight="26.0" prefWidth="65.0" text="Send" />
                </children>
             </AnchorPane>
          </content>
       </TitledPane>
-      <Label layoutX="263.0" layoutY="14.0" styleClass="h1" text="Player screen" />
+      <HBox alignment="CENTER" layoutX="14.0" layoutY="-8.0" prefHeight="41.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Player screen" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
