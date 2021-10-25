@@ -7,9 +7,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public class ChatServer implements Runnable{
+public class ChatServer implements Runnable, Messenger{
     private final ServerSocket server;
     private boolean shouldRun = true;
+    private final Set<Socket> clients = new HashSet<>();
     private final Set<Consumer<String>> registeredListeners = new HashSet<>();
 
     public ChatServer() throws IOException {
@@ -21,7 +22,8 @@ public class ChatServer implements Runnable{
         while (shouldRun) {
             try {
                 var clientSocket = server.accept();
-                var thread = new Thread(new MessageReceivedHandler(clientSocket));
+                clients.add(clientSocket);
+                var thread = new Thread(new MessageReceivedHandler(clientSocket, this::MessageReceived));
                 thread.start();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -29,6 +31,9 @@ public class ChatServer implements Runnable{
         }
 
         try {
+            for (var client: clients) {
+                client.close();
+            }
             server.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,40 +52,24 @@ public class ChatServer implements Runnable{
         registeredListeners.remove(callback);
     }
 
+    public void SendMessage(String message) {
+        MessageReceived(message);
+    }
+
     private synchronized void MessageReceived(String message) {
         for (var listener : registeredListeners) {
             listener.accept(message);
         }
-    }
 
-    private class MessageReceivedHandler implements Runnable {
-        private final InputStream inputStream;
-
-        private MessageReceivedHandler(Socket socket) throws IOException {
-            inputStream = socket.getInputStream();
-        }
-
-        @Override
-        public void run() {
-            var reader = new BufferedReader(new InputStreamReader(inputStream));
+        for (var client : clients) {
+            PrintWriter writer = null;
             try {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    MessageReceived(line);
-                }
-
-                cleanup();
+                writer = new PrintWriter(client.getOutputStream());
+                writer.write(message + "\n");
+                writer.flush();
             } catch (IOException e) {
-                try {
-                    cleanup();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                e.printStackTrace();
             }
-        }
-
-        private void cleanup() throws IOException {
-            inputStream.close();
         }
     }
 }
