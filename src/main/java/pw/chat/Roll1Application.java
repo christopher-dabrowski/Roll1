@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.kordamp.bootstrapfx.BootstrapFX;
 
 import java.io.IOException;
 
@@ -14,6 +15,7 @@ public class Roll1Application extends Application {
 
         var loader = new FXMLLoader(Roll1Application.class.getResource("main-screen.fxml"));
         var scene = new Scene(loader.load(), 600, 400);
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
         stage.setScene(scene);
         stage.show();
     }
