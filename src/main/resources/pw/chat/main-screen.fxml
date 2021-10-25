@@ -7,7 +7,8 @@
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pw.chat.controllers.MainScreenController">
+            fx:controller="pw.chat.controllers.MainScreenController"
+            fx:id="rootPane">
    <VBox alignment="TOP_CENTER" layoutX="208.0" layoutY="45.0" AnchorPane.topAnchor="45.0">
       <Label styleClass="h1" text="Roll 1"/>
       <Label styleClass="lead" text="Best D&amp;D companion app"/>
@@ -15,14 +16,14 @@
    <Label layoutX="464.0" layoutY="370.0" styleClass="text-muted" text="Powerd by friendship"
           AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.5"/>
    <VBox alignment="TOP_CENTER" layoutX="208.0" layoutY="128.0" spacing="10.0" AnchorPane.topAnchor="128.0">
-      <Button mnemonicParsing="false" text="Start session (DM)">
+      <Button mnemonicParsing="false" text="Start session (DM)" onAction="#startDmSession">
          <styleClass>
             <String fx:value="btn"/>
             <String fx:value="btn-primary"/>
             <String fx:value="btn-lg"/>
          </styleClass>
       </Button>
-      <Button mnemonicParsing="false" text="Join session">
+      <Button mnemonicParsing="false" text="Join session" onAction="#startPlayerSession">
          <styleClass>
             <String fx:value="btn"/>
             <String fx:value="btn-default"/>
