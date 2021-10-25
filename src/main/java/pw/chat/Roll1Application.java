@@ -7,12 +7,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class Roll1Application extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         stage.setTitle("Roll 1");
 
-        var loader = new FXMLLoader(HelloApplication.class.getResource("main-screen.fxml"));
+        var loader = new FXMLLoader(Roll1Application.class.getResource("main-screen.fxml"));
         var scene = new Scene(loader.load(), 600, 400);
         stage.setScene(scene);
         stage.show();
